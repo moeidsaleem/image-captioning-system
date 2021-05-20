@@ -4,6 +4,8 @@ var path = require('path');     //used for file path
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+let IMAGE_NAME = 'image.jpg'
 /* ========================================================== 
 Upload with multer
 ============================================================ */
@@ -14,7 +16,10 @@ var storage =   multer.diskStorage({
   },
   filename: function (req, file, callback) {
     // callback(null, file.fieldname + '-' + Date.now());
-    callback(null, "imagedata");
+    // IMAGE_NAME = "image" + Date.now() + "." + file.originalname.substring(file.originalname.indexOf('.') + 1)
+    // IMAGE_NAME = "image.png";
+    console.log("IMAGE_NAME", IMAGE_NAME);
+    callback(null, IMAGE_NAME);
   }
 });
 var upload = multer({ storage : storage}).single('userPhoto');
@@ -43,27 +48,37 @@ function callName(req, res) {
     var sys = require('util');
 
     var projectPath = __dirname;  // Users/yujin/Desktop/nodePytonWithNN
-    var imagePath = __dirname + "/public/img/imagedata"; // Users/yujin/Desktop/nodePytonWithNN/public/img/image.png
+    console.log('process-imagename', IMAGE_NAME)
+    var imagePath = __dirname + "/public/img/"+IMAGE_NAME; // Users/yujin/Desktop/nodePytonWithNN/public/img/image.png
 
     // console.log("projectPath: " + projectPath.toString());
     // console.log("Image Path: " + imagePath.toString());
 
     var spawn = require("child_process").spawn;
+
+
+    imagePath = 'public/img/'+IMAGE_NAME;
+    console.log('project-path', projectPath.toString())
+    console.log('img-path',imagePath.toString())
           
-    var process = spawn('python',["./Python_NN/app_image_caption.py",
+    var process = spawn('python3',["./Python_NN/app_image_caption.py",
     // var process = spawn('python',["./Python_NN/test.py",
                                 projectPath.toString(),
-                                imagePath.toString()] );
+                                imagePath.toString()] )
  
     process.stdout.on('data', function(data) {
         console.log("\n\nResponse from python: " + data.toString());
-        res.send(data.toString());
+        res.json({
+          caption:data.toString(),
+          imagePath: imagePath.toString().replace('public/','./')
+        });
+
+        // res.json({
+        //   caption: data.toString()
+        // })
 
     })
     
 }
-
-
-
 
 

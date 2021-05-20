@@ -9,8 +9,8 @@ from vocabulary import Vocabulary
 from helpers import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-root_path = sys.argv[1]
-image_path = sys.argv[2]
+root_path = sys.argv[1] # pass the directory path of the project
+image_path = sys.argv[2] # pass the images path  (image.png)
 
 # Define a transform to pre-process the testing images.
 transform_test = transforms.Compose([ 

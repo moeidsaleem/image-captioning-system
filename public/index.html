@@ -1,70 +1,63 @@
 <html>
   <head>
-    <title>Image Caption.</title>
+    <title>Image Captioning System - ICS</title>
   </head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <title>Generate Caption</title>
-
   <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/style.css">
 
-  <style>
-
-      body {
-            background-color: lightblue;
-        }
-
-    h1 {
-        color: white;
-        text-align:center;
-    }
-    
-    p {
-        color: black;
-        text-align:center;
-    }
-
-    #topContainer {
-        width:100%;
-        height:100%;
-        background-size:cover;
-    }
-        
-    .bold {
-        font-weight:bold;
-    }	
-    .marginTop {
-        margin-top:30px;
-    }
-    .center {
-        text-align:center;
-    }
-    .title {
-        margin-top:100px;
-        font-size:300%;
-    }
-
-    #imageDiv {
-        position:relative;
-    }
-
-    #imageDiv img {
-        max-width:100%;max-height:100%;
-    }
-
-
-</style>
   <body>
-      
-    <a href="https://github.com/egcode/image-caption" target="_blank"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 1000;" src="./img/fork_me.png"></a>
-    <div style="height: 50px; margin-bottom: 20px;">
-        <p style="color:black;" class="lead center">Upload png or jpg image and check how AI will describe it</p>
-    </div>
+      <nav class="navbar navbar-expand-sm navbar navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">Image Captioning System (ICS)</a>
+          <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Link</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownId">
+                          <a class="dropdown-item" href="#">Action 1</a>
+                          <a class="dropdown-item" href="#">Action 2</a>
+                      </div>
+                  </li>
+              </ul>
 
-    <div class="container contentContainer" id="topContainer">
+          </div>
+      </nav>
+
+
+   
+       <div class="jumbotron jumbotron-fluid bg-dark text-light text-center">
+           <div class="container">
+               <h1 class="display-3">Image Captioning System (ICS)</h1>
+               <p class="lead">Simply Upload Your image & we will handle the rest</p>
+               <hr class="my-2">
+               <p class="lead">
+                   <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Learn More</a>
+               </p>
+           </div>
+       </div>
+  
+  
+  
+    <div class="container text-center" id="topContainer">
+        <div class="row">
+            <div class="col-md-12">
+        <div style="height: 50px; margin-bottom: 20px;">
+            <p style="color:black;" class="lead center">Upload png or jpg image and check how AI will describe it</p>
+        </div>
+    
     
         <div id="formDiv" class="center">
             <form id="uploadForm" class="marginTop"
@@ -72,8 +65,8 @@
                 action="/upload"
                 method="post">
                     
-                <span class="btn btn-primary btn-file">
-                    <input id="uploadImage" type="file" name="userPhoto" accept="image/x-png, image/jpeg"/>
+                <span class="btn btn-suc btn-file">
+                    <input id="uploadImage" type="file" name="userPhoto" accept="image/jpeg" />
                     <input id="submitButton" type="submit" class="btn btn-success btn-lg marginTop" value="Upload Image" name="submit">
                 </span>
             </form>
@@ -89,14 +82,24 @@
 
 
         <div class="marginTop center" id="imageDiv" >
-            <img id="imageView"  src="" class="img-thumbnail" alt="Cinque Terre" width="500" height="500">
+            <img id="imageView"  src="" class="img-thumbnail" alt="Image to be uploaded" width="500" height="500">
         </div> 
 
         <div class="center" id="refreshButtonDiv">
                 <button class="btn btn-success btn-lg marginTop" type="button" id="restart" onclick="refreshClick()">Try another one</button>        
         </div>  
-    </div>
+    </div></div> 
+</div>
 
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
+    <footer class="footer">
+        <div class="container">
+          <span class="text-muted">Powered by Signup Solutions.</span>
+        </div>
+      </footer>
   </body>
   <script type="text/javascript" src="/js/app.js"></script>
   <script src="/js/spin.js"></script>
@@ -125,9 +128,6 @@
         shadow: '0 0 1px transparent', // Box-shadow for the lines
         position: 'absolute' // Element positioning
     };
-    // var target = document.getElementById('topContainer');
-    // var spinner = new Spinner(opts).spin(target);
-    // var spinner = new Spinner(opts);
 
 
 

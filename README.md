@@ -1,22 +1,52 @@
-# Image Caption <br>
+# Image Captioning System
 
-## Upload any image and Neural Network will generate caption for it. <br> You can try it [here](https://egstack.com/index_caption.html)
-<img src="images/1.png" width="550">
+A final year project - Basically recognizing images and providing caption regarding that image.
+This is based on PyTorch Neural Network.
 
 
-## Description
 
-NodeJS is wrapped around Pytorch Neural Network. <br>
+## Languages
 
-Convolutional Neural Network is pretrained Resnet50. <br>
-CNN-RNN encoder-decoder pair  was trained with [COCO dataset](http://cocodataset.org/#home).
+- JavaScript
+- Python
 
- Approximate process of traing is described in this [paper](https://arxiv.org/pdf/1411.4555.pdf) <br>
- <img src="images/2.png" width="550">
+## Technology
+
+- Node.js
+- Python (Python3)
+- PyTorch (Neural Network)
+
+
+## Machine Learning
+
+We have used Pytorch Neural Network for this project along with Convoluional Neural Network with pretrained Resnet50. 
+CNN-RNN Encoder Decoder were tarined with COCO datasets.
+
+Using the COCOSET pretrained models, we are able to achieve captioning to great correction level.
+
+
 
 ## **Requirements for installation**
-- Node JS, Pytorch, Numpy, PIL.
+
+- Node JS
+- Pytorch
+- Numpy
+- PIL.
+
 <br><br>
 
 ## **Run**
 To run the app you just need to install all dependencies and hit 'node server.js'
+
+
+## White Paper 
+
+- https://arxiv.org/pdf/1411.4555.pdf
+
+
+## Refereces
+
+- https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html
+- https://lionbridge.ai/articles/difference-between-cnn-and-rnn/
+- https://en.wikipedia.org/wiki/Convolutional_neural_network
+- https://pytorch.org/hub/pytorch_vision_resnet/

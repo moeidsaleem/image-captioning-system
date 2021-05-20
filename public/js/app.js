@@ -3,19 +3,23 @@ animSpeed = 100;
 
 function uiState(state) {
     if (state == ENUM_INITIAL_STATE) {
+        console.log('state-1')
         $("#formDiv").show(animSpeed);
         $("#imageDiv").hide(animSpeed);
         $("#captionDiv").hide(animSpeed);
         $(".messages").hide(animSpeed);
         $("#refreshButtonDiv").hide(animSpeed);
     } else if (state == ENUM_PREPROCESS_STATE) {
+        console.log('state-2')
         $("#formDiv").hide(animSpeed);
-        $("#imageView").attr('src', '/img/imagedata');
+        $("#imageView").attr('src', '/img/image.jpg');
         $("#imageDiv").show(animSpeed);
         $("#captionDiv").show(animSpeed);
         // $(".messages").show(animSpeed);
         $("#refreshButtonDiv").hide(animSpeed);
     } else if (state == ENUM_COMPLETED_STATE) {
+        console.log('state-3')
+
         uiState(ENUM_PREPROCESS_STATE);
         $("#refreshButtonDiv").show(animSpeed);
     }
@@ -36,8 +40,10 @@ function uploadImage() {
         },
 
         success: function(response) {
-            $("#status").empty().text(response);
-                console.log(response);
+            $("#status").empty().text(response.caption);
+            $("#imageView").attr('src','public/img/image.jpg');
+
+                console.log('response',response);
                 console.log("ZAYEBIS UPLOADED");
                 uiState(ENUM_PREPROCESS_STATE);
                 spinner.stop(target);
@@ -62,13 +68,13 @@ function getImageCaptionFromServer() {
         contentType: 'application/json',
         success: function(caption) { 
             console.log('aaa success');
-            console.log(caption);
+            console.log(caption.caption);
 
-            // var $message = jQuery('.messages');//getting text from textField
+            var $message = jQuery('.messages');//getting text from textField
             // $message.append('<p><strong>' + 'name'  + ' ' + '</strong></p>');
             // $message.append('<p>' + 'text' + '</p>');//showing data
             var $message = jQuery('.messages');//getting text from textField
-            $message.append('<h1><strong>' + caption + '</strong></h1>');
+            $message.append('<h1><strong>' + caption.caption + '</strong></h1>');
             $(".messages").show(animSpeed);
 
             uiState(ENUM_COMPLETED_STATE);
@@ -76,6 +82,7 @@ function getImageCaptionFromServer() {
 
         },
         error  : function(data) { 
+            console.log('masla h')
             uiState(ENUM_INITIAL_STATE);
             console.log('aaa error');
             console.log(data);
