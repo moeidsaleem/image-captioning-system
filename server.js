@@ -4,6 +4,52 @@ var path = require('path');     //used for file path
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
+const mongoose = require('mongoose');
+
+
+mongoose.connect('mongodb+srv://abrar:abrar@cluster0.xpldp.mongodb.net/image_captioning',  
+{ useNewUrlParser: true,
+useCreateIndex: true,
+useUnifiedTopology: true
+});
+
+
+
+const Photo = new mongoose.Schema(
+  {
+    thumbnailUrl:String,
+    fileId:String,
+    name: String,
+    size: Number,
+    filePath: String,
+    url: String,
+    fileType: String,
+    height: Number,
+    width: Number,
+    thumbnailUrl:String,
+      caption:{
+          type: String,
+          required: [true, 'Please provide complete Caption'],
+          index: true
+      }
+
+},{
+  timestamps: true
+});
+const PhotoModel =  mongoose.model('Photo', Photo)
+
+
+
+const ImageKit = require('imagekit');
+const imageToBase64 = require('image-to-base64');
+
+
+const imagekit = new ImageKit({
+    urlEndpoint: 'https://ik.imagekit.io/busmanagement/',
+    publicKey: 'public_fKo5YmIft0pv9hhR8bX+ixsX/z8=',
+    privateKey: 'private_0gtSrJfQtC+55joG9/bfigh0BtI='
+  });
+
 
 let IMAGE_NAME = 'image.jpg'
 /* ========================================================== 
@@ -15,10 +61,6 @@ var storage =   multer.diskStorage({
     callback(null, './public/img');
   },
   filename: function (req, file, callback) {
-    // callback(null, file.fieldname + '-' + Date.now());
-    // IMAGE_NAME = "image" + Date.now() + "." + file.originalname.substring(file.originalname.indexOf('.') + 1)
-    // IMAGE_NAME = "image.png";
-    console.log("IMAGE_NAME", IMAGE_NAME);
     callback(null, IMAGE_NAME);
   }
 });
@@ -43,7 +85,7 @@ var server = app.listen(3030, function() {
 
 app.post('/process', callName);
  
-function callName(req, res) {
+async function callName(req, res) {
      
     var sys = require('util');
 
@@ -66,19 +108,42 @@ function callName(req, res) {
                                 projectPath.toString(),
                                 imagePath.toString()] )
  
-    process.stdout.on('data', function(data) {
+    process.stdout.on('data', async function(data) {
         console.log("\n\nResponse from python: " + data.toString());
-        res.json({
+
+        let url;
+       let uploadImageToCloud = await imageToBase64(imagePath);
+       console.log('upload',uploadImageToCloud);
+       let imgKitUploadInstance = await imagekit.upload({
+         file: uploadImageToCloud,
+         fileName:"caption",
+         folder: 'image_captioning'
+       })
+       console.log('imgKit', imgKitUploadInstance);
+       let c = await PhotoModel.create({...imgKitUploadInstance, caption: data.toString()});
+          let b = await PhotoModel.find();
+          console.log('b', b);
+
+          res.json({
           caption:data.toString(),
           imagePath: imagePath.toString().replace('public/','./')
         });
+      
+    });
 
-        // res.json({
-        //   caption: data.toString()
-        // })
 
-    })
+
     
 }
 
 
+
+app.get('/images', async (req,res)=>{
+  let b = await PhotoModel.find();
+  res.json(b)
+});
+
+
+app.post('/clear', async (req,res)=>{
+  
+})

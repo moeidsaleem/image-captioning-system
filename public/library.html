@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <title>Image Captioning System - ICS</title>
+  </head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/style.css">
+
+  <body>
+      <nav class="navbar navbar-expand-sm navbar navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">Image Captioning System (ICS)</a>
+          <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                  <li class="nav-item ">
+                      <a class="nav-link" href="index.html">Home
+                    </a>
+                  </li>
+                  <li class="nav-item active">
+                      <a class="nav-link" href="library.html">Library</a>
+                  </li>
+              </ul>
+
+          </div>
+      </nav>
+
+
+      <br>
+   
+       <div class="jumbotron jumbotron-fluid bg-dark text-light text-center">
+           <div class="container">
+               <h1 class="display-3">Image Captioning System (ICS)</h1>
+               <p class="lead">Simply Upload Your image & we will handle the rest</p>
+               <hr class="my-2">
+               <p class="lead">
+                   <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Welcome to Library</a>
+               </p>
+           </div>
+       </div>
+
+
+       <div class="container">
+          <div class="row" id="imagesContainer">
+
+        
+         </div>
+       </div>
+  
+   
+    <br><br>
+    <footer class="footer">
+        <div class="container">
+          <span class="text-muted">Powered by Signup Solutions.</span>
+        </div>
+      </footer>
+  </body>
+  <script type="text/javascript" src="/js/app.js"></script>
+  <script src="/js/spin.js"></script>
+  <script src="/js/jquery-3.1.0.min.js"></script>
+  <script src="/js/jquery.form.min.js"></script>
+  
+
+  <script>
+     $(document).ready(function() {
+
+
+        let images =[];
+        
+      $.get('http://localhost:3030/images',response =>{
+        console.log('r', response);
+        images = [...response];
+
+        let container = document.getElementById('imagesContainer');
+
+
+      $.each([...response], (index,data)=>{
+        console.log('rr',index)
+        console.log('sss',data)
+         let img = document.createElement('img')
+         let heading = document.createElement('h4');
+         heading.innerHTML = data.caption || '';
+         img.className ='img-fluid rounded-top';
+         img.src = data.url || './img/no_image.jpeg';
+
+         container.append(img)
+         container.append(heading);
+      });
+
+      })
+
+   });
+
+
+  </script>
+  
+</html>
+
